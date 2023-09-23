@@ -2,12 +2,11 @@ import { Button } from '@mui/material';
 //import { Link } from "react-router-dom";
 import axios from 'axios'
 import React from 'react'
-import "./BookUser.css"
+import "./BookCart.css"
 
-const BookUser = (props) => {
+const BooksCart = (props) => {
 
-    const {_id,name,author, description, price, available, image} = props.book;
-
+    const {_id,name,author, description, price, image} = props.book;
 
     // Function to add to cart button click event
     const handleButtonClick = () => {
@@ -23,27 +22,26 @@ const BookUser = (props) => {
                 description: String(description),
                 price: Number(price),
                 image: String(image),
-                cart: true, // setting to true since book added to cart
-                available: Boolean(false), // book added to cart, so book not available
+                cart: false, // setting to false since book is removed from cart
+                available: true, // book removed from cart, so book is available on store page
             })
             .then((res) => res.data);
     };
 
     return (
-        <div className="card">
+        <div className="cart-card">
             <img src={image} alt={name}/>
             <article>Author : {author}</article>
             <h3>{name}</h3>
             <p>{description}</p>
             <h3>Rs {price}</h3>
-            <h3>Available : {String(available)}</h3>
-            <Button disabled={!available} variant='contained' 
-            color='secondary'
+            <Button variant='contained' 
+            style={{ backgroundColor: 'black', color: 'white', marginBottom:'5px'}}
             onClick={handleButtonClick}
-             >Add to cart</Button>
+             >Remove from cart</Button>
         </div>
 
     )
 }
 
-export default BookUser;
+export default BooksCart;

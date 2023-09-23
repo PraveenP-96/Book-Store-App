@@ -26,6 +26,7 @@ const UpdateBook = () => {
                 description: String(inputs.description),
                 price: Number(inputs.price),
                 image: String(inputs.image),
+                cart: false, //Cart should be set to false because existing book is updated here.
                 available: Boolean(checked),
             })
             .then((res) => res.data);
@@ -107,7 +108,9 @@ const UpdateBook = () => {
                             label="Available"
                         />
 
-                        <Button type="submit">Update Book</Button>
+                        <Button variant="contained" 
+                        style={{ backgroundColor: 'black', color: 'white' }}
+                        type="submit">Update Book</Button>
                     </Box>
                 </form>
             )}

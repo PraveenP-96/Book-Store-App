@@ -6,6 +6,10 @@ import AddBook from "./components/AddBook";
 import Cart from "./components/Cart";
 import BooksAdmin from "./components/BookAdmin/BooksAdmin";
 import UpdateBook from "./components/UpdateBook";
+import Cancel from "./components/Cancel";
+import Success from "./components/Success";
+import Login from "./components/Login/Login";
+import RegistrationPage from "./components/Register/Register";
 
 function App() {
   return (
@@ -21,6 +25,10 @@ function App() {
         <Route path="/books" element={<BooksAdmin/>} exact />
         <Route path="/cart" element={<Cart/>} exact />
         <Route path="/books/:id" element={<UpdateBook/>} exact />
+        <Route path="/cancel" element={<Cancel/>} exact />
+        <Route path="/success" element={<Success/>} exact />
+        <Route path="/login" element={<Login/>} exact />
+        <Route path="/register" element={<RegistrationPage/>} exact />
       </Routes>
     </main>
     </React.Fragment>

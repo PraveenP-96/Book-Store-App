@@ -28,6 +28,7 @@ const AddBook = () => {
             description: String(input.description),
             price: Number(input.price),
             image: String(input.image),
+            cart: false,
             available: Boolean(checked),
           })
           .then((res) => res.data);
