@@ -35,6 +35,7 @@ const getId = async (req, res, next) => {
 };
 
 const addBook = async (req, res, next) => {
+    const cart = false;
     const {name,author,description,price,available,image} = req.body;
     let book;
     try {
@@ -44,6 +45,7 @@ const addBook = async (req, res, next) => {
             description,
             price,
             available,
+            cart,
             image,
         });
         await book.save();
@@ -60,7 +62,7 @@ const addBook = async (req, res, next) => {
 
 const updateBook = async (req, res, next) => {
     const id = req.params.id;
-    const {name,author,description,price,available,image} = req.body;
+    const {name,author,description,price,available,cart,image} = req.body;
  
     let book;
     try {
@@ -70,6 +72,7 @@ const updateBook = async (req, res, next) => {
             description,
             price,
             available,
+            cart,
             image,
         });
         book = await book.save();

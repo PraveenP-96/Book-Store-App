@@ -21,6 +21,10 @@ const bookSchema = new Schema({
     },
     available: {
         type: Boolean,
+        required: true
+    },
+    cart: {
+        type: Boolean,
         //required: true
     },
     image: {
