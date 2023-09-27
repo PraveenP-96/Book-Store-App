@@ -1,0 +1,23 @@
+/* Profile.css */
+.user-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+  
+  .delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  

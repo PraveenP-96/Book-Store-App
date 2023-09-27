@@ -10,6 +10,7 @@ import Cancel from "./components/Cancel";
 import Success from "./components/Success";
 import Login from "./components/Login/Login";
 import RegistrationPage from "./components/Register/Register";
+import MyProfile from "./components/BookUser/MyProfile";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/success" element={<Success/>} exact />
         <Route path="/login" element={<Login/>} exact />
         <Route path="/register" element={<RegistrationPage/>} exact />
+        <Route path="/myprofile/:id" element={<MyProfile/>} exact />
       </Routes>
     </main>
     </React.Fragment>
