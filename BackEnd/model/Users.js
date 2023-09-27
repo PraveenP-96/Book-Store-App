@@ -2,6 +2,25 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+const bookUserSchema = new Schema({
+    Bookname: {
+        type: String,
+        required: true,
+    },
+    image: {
+        type: String,
+        required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+    date: {
+        type: Date,
+        required: true,
+    }
+})
+
 const userSchema = new Schema({
     name: {
         type: String,
@@ -15,12 +34,18 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    isAdmin: {
+    isAdmin: { 
         type: Boolean,
         required: true
-    }
+    },
+    pastOrders: 
+    {
+            type: [bookUserSchema],
+            //required: true,
+    },
 
 })
 
 module.exports = mongoose.model("User",userSchema);
+
 
