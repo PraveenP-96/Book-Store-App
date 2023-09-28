@@ -1,18 +1,27 @@
 import { Button } from '@mui/material';
-//import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import React from 'react'
+import Cookies from 'js-cookie';
 import "./BookUser.css"
 
 const BookUser = (props) => {
 
     const {_id,name,author, description, price, available, image} = props.book;
-
+    const navigate = useNavigate();
 
     // Function to add to cart button click event
     const handleButtonClick = () => {
-        sendRequest();
-        window.location.reload();
+        if(Cookies.get("isLoggedIn") === true)
+        {
+            sendRequest();
+            window.location.reload();
+        }
+        else
+        {
+            navigate('/login')
+        }
+        
     };
 
     const sendRequest = async () => {

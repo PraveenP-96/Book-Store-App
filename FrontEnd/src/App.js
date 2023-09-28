@@ -30,7 +30,7 @@ function App() {
         <Route path="/success" element={<Success/>} exact />
         <Route path="/login" element={<Login/>} exact />
         <Route path="/register" element={<RegistrationPage/>} exact />
-        <Route path="/myprofile/:id" element={<MyProfile/>} exact />
+        <Route path="/myprofile" element={<MyProfile/>} exact />
       </Routes>
     </main>
     </React.Fragment>

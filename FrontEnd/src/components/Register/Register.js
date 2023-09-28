@@ -36,42 +36,40 @@ function RegistrationPage() {
     e.preventDefault();
 
     if (isPasswordValid === false) {
-      alert('Password does not meet the requirements.');
-    }
-
-    if (password.length === 0 || email.length === 0 || name.length === 0) {
-      alert('Please enter all the fields.');
-    }
-    else {
-
-      try {
-        const response = await axios.post('http://localhost:5000/users/register',{
-          name: name,
-          email: email,
-          password: password,
-          isAdmin: isAdmin,
-        });
-         // name, email, password, isAdmin);
-
-        // Check the response status or data for success or errors
-        if (response.status === 200) {
-          // Registration successful, handle accordingly (e.g., redirect)
-          console.log('Registration successful!');
-          // add reg alert
-          navigate("/login");
-        }
-        else if (response.status === 201) {
-          alert('Registration failed. Email already in use.');
-        } else {
-          // Registration failed, handle accordingly (e.g., display error messages)
-          console.error('Registration failed:', response.data);
-          alert('Your registration request failed. please try again.');
-        }
-      } catch (error) {
-        // Handle network errors or other exceptions
-        console.error('An error occurred:', error);
+        
+        alert('Password does not meet the requirements.');
       }
+      
+    if(password.length === 0 || email.length === 0 || name.length === 0)
+    {
+        alert('Please enter all the fields.');
     }
+    else
+    {
+
+    try {
+      const response = await axios.post('http://localhost:5000/users/register', {name, email, password, isAdmin});
+
+      // Check the response status or data for success or errors
+      if (response.status === 200) {
+        // Registration successful, handle accordingly (e.g., redirect)
+        console.log('Registration successful!');
+        // add reg alert
+        navigate("/login");
+      } 
+      else if(response.status === 201)
+    {
+      alert('Registration failed. Email already in use.');
+    }else {
+        // Registration failed, handle accordingly (e.g., display error messages)
+        console.error('Registration failed:', response.data);
+        alert('Your registration request failed. please try again.');
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('An error occurred:', error);
+    }
+  }
 
   };
 

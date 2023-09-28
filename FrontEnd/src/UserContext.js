@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
+import Cookies from 'js-cookie';
 
 const UserContext = createContext();
 
@@ -7,18 +8,25 @@ export function useUser() {
 }
 
 export function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
 
-  const login = (userData) => {
-    setUser(userData);
+  const login = (loggedIn, Admin, email) => {
+
+    Cookies.set("isLoggedIn", loggedIn);
+    Cookies.set("isAdmin", Admin);
+    Cookies.set("email", email);
+    console.log(loggedIn, Admin);
+    window.location.reload();
   };
 
   const logout = () => {
-    setUser(null);
+    Cookies.remove("isLoggedIn");
+    Cookies.remove("isAdmin");
+    Cookies.remove("email");
+    window.location.reload();
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout }}>
+    <UserContext.Provider value={{login, logout }}>
       {children}
     </UserContext.Provider>
   );
