@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import './Register.css';
 import axios from 'axios';
-import {useNavigate, Link} from "react-router-dom";
+import { useNavigate, Link } from 'react-router-dom';
+import {Grid,Container,CssBaseline,TextField,Button,FormControlLabel,Checkbox,Typography,Paper,Box,} from '@mui/material';
+import image from '../../images/Registration_Bg.jpg';
 
 function RegistrationPage() {
   const [email, setEmail] = useState('');
@@ -10,18 +11,17 @@ function RegistrationPage() {
   const [name, setName] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
-
     const newPassword = e.target.value;
     setPassword(newPassword);
     // Check if the password meets the requirements
     const isMinLength = newPassword.length >= 6; // Adjust the minimum length as needed
     setIsPasswordValid(isMinLength);
-  
   };
 
   const handleNameChange = (e) => {
@@ -36,88 +36,121 @@ function RegistrationPage() {
     e.preventDefault();
 
     if (isPasswordValid === false) {
-        
-        alert('Password does not meet the requirements.');
-      }
-      
-    if(password.length === 0 || email.length === 0 || name.length === 0)
-    {
-        alert('Please enter all the fields.');
+      alert('Password does not meet the requirements.');
+      return;
     }
-    else
-    {
+
+    if (password.length === 0 || email.length === 0 || name.length === 0) {
+      alert('Please enter all the fields.');
+      return;
+    }
 
     try {
-      const response = await axios.post('http://localhost:5000/users/register', {name, email, password, isAdmin});
+      const response = await axios.post('http://localhost:5000/users/register', {
+        name,
+        email,
+        password,
+        isAdmin,
+      });
 
-      // Check the response status or data for success or errors
       if (response.status === 200) {
-        // Registration successful, handle accordingly (e.g., redirect)
         console.log('Registration successful!');
-        // add reg alert
-        navigate("/login");
-      } 
-      else if(response.status === 201)
-    {
-      alert('Registration failed. Email already in use.');
-    }else {
-        // Registration failed, handle accordingly (e.g., display error messages)
+        navigate('/login');
+      } else if (response.status === 201) {
+        alert('Registration failed. Email already in use.');
+      } else {
         console.error('Registration failed:', response.data);
-        alert('Your registration request failed. please try again.');
+        alert('Your registration request failed. Please try again.');
       }
     } catch (error) {
-      // Handle network errors or other exceptions
       console.error('An error occurred:', error);
     }
-  }
-
   };
 
-   
-
   return (
-    <div className="registration-container">
-      <h2>Registration</h2>
-      <div className="registration-form">
-      <label>Name:</label>
-        <input
-          type="text"
-          placeholder="Enter your name"
-          value={name}
-          onChange={handleNameChange}
-        />
-        <label>Email:</label>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <label>Password:</label>
-        <input
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={handlePasswordChange}
-        />   
-        {!isPasswordValid && (
-          <p className="error-message">Password must be at least 6 characters long.</p>
-        )}
-        <div className="checkbox">
-          <label style={ {"text-align": "center"}}>
-            <input
-              type="checkbox"
-              checked={isAdmin}
-              onChange={handleAdminCheckboxChange}
+    <div style={{backgroundImage: `url(${image})`,backgroundSize: 'cover',display: 'flex',justifyContent: 'center',alignItems: 'center',minHeight: '100vh',margin: 0,}}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Registration
+          </Typography>
+          <Box component="form" onSubmit={handleRegister} sx={{ mt: 2 }}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="Name"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              value={name}
+              onChange={handleNameChange}
             />
-            Register as Admin
-          </label>
-        </div>
-        <button onClick={handleRegister}>Register</button>
-        <p>
-           Already have an account? <Link to="/login">Login</Link>
-      </p>
-      </div>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              value={email}
+              onChange={handleEmailChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="new-password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            {!isPasswordValid && (
+              <Typography variant="caption" color="error">
+                Password must be at least 6 characters long.
+              </Typography>
+            )}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="isAdmin"
+                  color="primary"
+                  checked={isAdmin}
+                  onChange={handleAdminCheckboxChange}
+                />
+              }
+              label="Register as Admin"
+            />
+            <Button type="submit" fullWidth variant="contained" color="primary" style={{backgroundColor: 'black', color: 'white', marginLeft: '50px', maxWidth:'250px'}}>
+              Register
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link to="/login" variant="body2" style={{marginLeft:'50px'}}>
+                  Already have an account? Login
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Paper>
+      </Container>
     </div>
   );
 }

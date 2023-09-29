@@ -14,7 +14,6 @@ const BooksAdmin = () => {
     useEffect(() => {
         fetchHandler().then((data) => setBooks(data.books));
     },[]);
-    //console.log(books);
   return (
     <ul>
         {books && books.map((book,i)=> (

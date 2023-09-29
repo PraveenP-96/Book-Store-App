@@ -24,4 +24,3 @@ mongoose.connect(
     })
     .catch((err) => console.log(err))
 
-//mangoDb pwd : tkJCg07ohOXFzRhXy

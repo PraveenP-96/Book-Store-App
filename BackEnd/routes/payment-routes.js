@@ -1,4 +1,3 @@
-// Import necessary modules
 const express = require("express");
 const stripe = require('stripe')('sk_test_51NsHM7SCGefnowhAvJsHno517yH6lHcKh9BIYxrLdY2fpcTxAdrEGKaILxzDhTpfb2qSsHLGUDN5c6eQziWr0NuV00A9Lq6ZQe');
 const router = express.Router();
@@ -12,7 +11,6 @@ router.post("/", async (req, res) => {
       payment_method_types: ["card"],
       mode: "payment",
       line_items: req.body.items.map(item => {
-        //console.log(item)
         return {
           price_data: {
             currency: "inr",

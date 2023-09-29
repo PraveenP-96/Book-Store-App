@@ -1,8 +1,11 @@
 /* Profile.css */
 .user-card {
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center; /* Center-align text */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
   }
   
   .order-item {

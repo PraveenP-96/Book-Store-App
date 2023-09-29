@@ -12,7 +12,7 @@ const BookUser = (props) => {
 
     // Function to add to cart button click event
     const handleButtonClick = () => {
-        if(Cookies.get("isLoggedIn") === true)
+        if(Cookies.get("isLoggedIn") === "true")
         {
             sendRequest();
             window.location.reload();

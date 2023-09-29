@@ -5,8 +5,6 @@ const { body, validationResult } = require("express-validator"); // Import expre
 const usersController =  require("../controllers/users-controller")
 
 
-
-// Validation middleware for the addUser route
 const addUserValidation = [
     body("name").notEmpty(),
     body("email").isEmail(),
@@ -14,12 +12,11 @@ const addUserValidation = [
     body("isAdmin").isBoolean(),
   ];
   
-// Route for adding a user
+
 router.post("/register", addUserValidation, usersController.addUser);
 router.post("/login", usersController.login)
 router.get("/:id", usersController.getUserId);
 router.get("/", usersController.getallUsers);
-// Route to add past orders
 router.put("/:id", usersController.addPastOrder);
 
 module.exports = router;

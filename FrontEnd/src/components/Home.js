@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Input } from '@mui/material';
-import logo1 from "../images/4.jpeg";
+import logo1 from "../images/Home_Bg.jpeg";
 import './Home.css'
 import BooksUser from "./BookUser/BooksUser";
 
@@ -8,7 +8,6 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
-    //<div>Welcome to Book Store App</div>
       <main >
       <div className="container">
         <img

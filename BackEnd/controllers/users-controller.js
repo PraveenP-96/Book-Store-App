@@ -25,52 +25,34 @@ const getUserId = async (req, res, next) => {
     if(!user){
         return res.status(404).json({message: "User not found"});
     }
-    // console.log(user);
+
     return res.status(200).json({user});
 
 };
 
-// const getUser = async (req, res, next) => {
-//     const email = req.params.id;
-//     let user;
-//     try {
-//         user = await Users.find({ "email": email });
-//     } catch (err) {
-//         console.log(err);
-//     }
-
-//     if (!user) {
-//         return res.status(404).json({ message: "User not found" });
-//     }
-
-//     return res.status(200).json({ user });
-
-// };
-
 const login = async (req, res, next) => {
-    const { name, email, password, isAdmin } = req.body;
+    const { email, password, isAdmin } = req.body;
     let user;
-    try {
-        user = await Users.find({
-            $and: [
-                {'email': email},
-                {'password': password},
-                {"isAdmin" : isAdmin}
-            ]
-        })
-       if (user)
-        return res.status(200).json({ message: "login successful" });
-    } catch (err) {
-        console.log(err);
-    }
 
-if(!user)
-    return res.status(201).json({ message: "Login failed." });
+    try {
+        user = await Users.findOne({ email });
+        if (!user) {
+            return res.status(201).json({ message: "User not found" });
+        }
+
+        if ((user.password === password) && (user.isAdmin === isAdmin)) {
+            return res.status(200).json({ message: "Login successful" });
+        } else {
+            return res.status(201).json({ message: "Authentication failed" });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
 };
 
 const addUser = async (req, res, next) => {
     const { name, email, password, isAdmin } = req.body;
-    console.log("addUSer",req.body);
     
     try {
         // Check if the email already exists in the database
@@ -104,17 +86,15 @@ const addUser = async (req, res, next) => {
 const addPastOrder = async (req, res, next) => {
     const userId = req.params.id; 
     const {pastOrders} = req.body; 
-    console.log("pastOrders",pastOrders)
+
     try {
-        // console.log("id",userId);
         const user = await Users.findById(userId);
-        // console.log(user);
+
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
     
         pastOrders.forEach((order) => {
-            console.log("order",order)
             user.pastOrders.push(order);
           });
 

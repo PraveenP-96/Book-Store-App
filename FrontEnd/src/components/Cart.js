@@ -2,25 +2,57 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import "./BookUser/BookUser.css"
 import BooksCart from "./BookUser/BooksCart"
-const URL = "http://localhost:5000/books";
-
-const fetchHandler = async() => {
-  return await axios.get(URL).then((res)=> res.data);
-};
+import Cookies from 'js-cookie';
+ 
 
 const Cart = () => {
-  //const bookName = "the";
+
   const [books, setBooks] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetchHandler().then((data) => setBooks(data.books));
+    fetchBooks();
+    fetchUserId(); //fetch the user id to push the past order to profile
   }, []);
+
+  // Fetch books from the server
+  const fetchBooks = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/books`);
+      setBooks(response.data.books);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
+  };
+
+  //fetch the user Id to add cart books 
+  const fetchUserId = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/users`);
+      const userData = response.data;
+
+      const filteredUser = userData.find((profile) => profile.email === Cookies.get("email"));
+
+      if (filteredUser) {
+        setUser(filteredUser);
+      } else {
+        setUser(null);
+      }
+    }
+    catch (error) {
+      console.error("Error fetching user:", error);
+    }
+
+  };
 
   //Filter books based on cart selection
  const filteredBooks = books.filter((book) => book.cart === true);
 
  // Calculate subtotal
  const subtotal = filteredBooks.reduce((acc, book) => acc + book.price, 0);
+
+
+
  const clearCartOrders = async () => {
 
   try {
@@ -52,8 +84,9 @@ const Cart = () => {
       const currentDate = new Date();
       const formattedDate = currentDate.toISOString(); // Convert to ISO 8601 format
       const pastOrders = [];
-    
     try {
+
+      
       for (const book of filteredBooks) {
         const order = {
           Bookname: book.name,
@@ -65,9 +98,8 @@ const Cart = () => {
         pastOrders.push(order); // Push each book order to the pastOrders array
       }
 
-      console.log("filtered book", pastOrders)
       // Send the entire pastOrders array to the backend
-      await axios.put(`http://localhost:5000/users/651283a05c9cd211092ddc50`, {
+      await axios.put(`http://localhost:5000/users/${user._id}`, {
         pastOrders: pastOrders,
       });
   
@@ -84,10 +116,10 @@ const Cart = () => {
       subtotal: subtotal.toFixed(2),
     });
 
-    // Extract the checkout URL from the response and store it in state
+    //Extract the checkout URL from the response and store it in state
     const url = response.data.url;
 
-    // Redirect to the Stripe Checkout page
+    //Redirect to the Stripe Checkout page
     window.location = url;
 
     //Assuming payment is always successful
@@ -108,12 +140,15 @@ const Cart = () => {
   return (
     <div style={{display:"flex", flexDirection:"column", alignItems: "center"}}>
     <ul>
-        {filteredBooks.map((book,i)=> (
+        {filteredBooks.length > 0 ? (
+          filteredBooks.map((book, i) => (
             <li key={i}>
-              {console.log(" book details1",book.cart)}
-                <BooksCart book={book}/>              
+              <BooksCart book={book} />
             </li>
-        ))}
+          ))
+        ) : (
+          <p style={{fontSize:'40px', marginTop:'10px'}}>Shop to get books added here</p>
+        )}
     </ul>
     <div>
         <p style={{ marginTop: "30px", fontSize: '1.2rem', color: 'black' }}

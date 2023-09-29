@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Tab, Tabs, Typography } from '@mui/material';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useUser } from '../UserContext';
 import Cookies from 'js-cookie';
 
 const Header = () => {
     const [value, setValue] = useState();
     const { logout } = useUser();
+    const history = useNavigate();
+
     const handleTabClick = () => {
         logout();
+        history("/");
     };
     return (
         <div>
@@ -43,7 +46,7 @@ const Header = () => {
                             <Tab onClick={() => handleTabClick()} LinkComponent={NavLink} to="/login" label="Logout" />)
                             :
                             (<Tab LinkComponent={NavLink} to="/login" label="Login" />)}
-                        {(Cookies.get("isAdmin") === "false" || Cookies.get("isAdmin") === undefined) &&
+                        {(Cookies.get("isAdmin") === "false" && Cookies.get("isLoggedIn") === "true") &&
                             <Tab LinkComponent={NavLink} to="/myprofile" label="Profile" />}
 
                     </Tabs>

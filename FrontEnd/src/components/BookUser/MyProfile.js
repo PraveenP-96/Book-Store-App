@@ -15,9 +15,9 @@ const MyProfile = () => {
       try {
         const response = await axios.get(`http://localhost:5000/users`);
         const userData = response.data;
-        console.log("userData", userData);
+
         const filteredUser = userData.find((profile) => profile.email === emailID);
-        console.log("filteredUser", filteredUser);
+
         if (filteredUser) {
           setUser(filteredUser);
         } else {

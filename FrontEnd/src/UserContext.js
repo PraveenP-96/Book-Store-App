@@ -14,7 +14,7 @@ export function UserProvider({ children }) {
     Cookies.set("isLoggedIn", loggedIn);
     Cookies.set("isAdmin", Admin);
     Cookies.set("email", email);
-    console.log(loggedIn, Admin);
+    //console.log(loggedIn, Admin);
     window.location.reload();
   };
 

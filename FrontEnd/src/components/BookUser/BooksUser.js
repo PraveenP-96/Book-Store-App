@@ -16,7 +16,6 @@ const BooksUser = (props) => {
     useEffect(() => {
         fetchHandler().then((data) => setBooks(data.books));
     },[]);
-    //console.log(books);
 
     //Filter books based on bookName
     const filteredBooks = bookName
