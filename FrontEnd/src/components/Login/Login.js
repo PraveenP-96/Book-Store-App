@@ -38,7 +38,7 @@ function LoginPage() {
         if (response.status === 200) {
           // Registration successful, handle accordingly (e.g., redirect)
           console.log('Login successful!');
-          login(true, isAdmin, email);
+         
 
           if (isAdmin) {
             console.log('Admin is logged IN');
@@ -46,6 +46,7 @@ function LoginPage() {
           } else {
             navigate('/');
           }
+          login(true, isAdmin, email);
         } else {
           // Registration failed, handle accordingly (e.g., display error messages)
           console.error('Login failed:', response.data);
