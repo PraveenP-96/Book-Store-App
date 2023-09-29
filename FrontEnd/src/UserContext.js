@@ -15,14 +15,14 @@ export function UserProvider({ children }) {
     Cookies.set("isAdmin", Admin);
     Cookies.set("email", email);
     //console.log(loggedIn, Admin);
-    window.location.reload();
+    //window.location.reload();
   };
 
   const logout = () => {
     Cookies.remove("isLoggedIn");
     Cookies.remove("isAdmin");
     Cookies.remove("email");
-    window.location.reload();
+    //window.location.reload();
   };
 
   return (
